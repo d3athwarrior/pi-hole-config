@@ -5,13 +5,17 @@ services:
   pihole:
     container_name: pihole
     image: pihole/pihole:latest
-    # For DHCP it is recommended to remove these ports and instead add: network_mode: "host"
+    hostname: pihole
+    # In case you are planning to use the DHCP services from the pi-hole, the below config item needs to be enabled
+    #network_mode: "host"
     ports:
-      - "<insert_your_static_IP_here>:53:53/tcp"
-      - "<insert_your_static_IP_here>:53:53/udp"
+      - "53:53/tcp"
+      - "53:53/udp"
       #- "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
       - "8081:80/tcp"
-    dns: <insert_your_static_IP_here>
+    #dns: # required only in case if you want the container to use a different DNS than the host
+     # - 192.168.0.103
+      #- 1.1.1.1
     environment:
       TZ: 'Asia/Kolkata'
       WEBPASSWORD: '<insert_password_here>'
@@ -20,6 +24,7 @@ services:
       - './etc-pihole:/etc/pihole'
       - './etc-dnsmasq.d:/etc/dnsmasq.d'    
     #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
-    cap_add:
-      - NET_ADMIN # Recommended but not required (DHCP needs NET_ADMIN)      
+    #cap_add:
+    #  - NET_ADMIN # Recommended but not required (DHCP needs NET_ADMIN)   enable in case you want to enable DHCP in the pi-hole    
+    #env:
     restart: unless-stopped
