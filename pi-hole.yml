@@ -30,4 +30,6 @@ services:
     restart: unless-stopped
 volumes:
   piholedata:
+    external: true
   piholednsmasq.d:
+    external: true
