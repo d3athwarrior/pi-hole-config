@@ -18,7 +18,7 @@ services:
       #- 1.1.1.1
     environment:
       TZ: 'Asia/Kolkata'
-      WEBPASSWORD: '<insert_password_here>'
+      WEBPASSWORD: '$WEBPASSWORD'
     # Volumes store your data between container upgrades
     volumes:
       - piholedata:/etc/pihole
